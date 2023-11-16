@@ -1,5 +1,7 @@
 # YCSB-cpp
 
+BURAK NOTE: For running on CloudLab, cmake must be upgraded to latest version. For getting the traces, simply run ycsb with basic database, modify workload as you wish.
+
 Yahoo! Cloud Serving Benchmark([YCSB](https://github.com/brianfrankcooper/YCSB/wiki)) written in C++.
 This is a fork of [YCSB-C](https://github.com/basicthinker/YCSB-C) with some additions
 
