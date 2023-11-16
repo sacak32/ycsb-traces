@@ -265,25 +265,31 @@ bool CoreWorkload::DoInsert(DB &db) {
 
 bool CoreWorkload::DoTransaction(DB &db) {
   DB::Status status;
-  switch (op_chooser_.Next()) {
-    case READ:
-      status = TransactionRead(db);
-      break;
-    case UPDATE:
-      status = TransactionUpdate(db);
-      break;
-    case INSERT:
-      status = TransactionInsert(db);
-      break;
-    case SCAN:
-      status = TransactionScan(db);
-      break;
-    case READMODIFYWRITE:
-      status = TransactionReadModifyWrite(db);
-      break;
-    default:
-      throw utils::Exception("Operation request is not recognized!");
+  Operation op = op_chooser_.Next();
+  if (op == READ)
+  {
+    Trace t;
+    t.type = "RD";
+    t.key = NextTransactionKeyNum();
+    traces.push_back(t);
+    status = DB::kOK;
   }
+  else if (op == UPDATE)
+  {
+    Trace t;
+    t.type = "WR";
+    t.key = NextTransactionKeyNum();
+    traces.push_back(t);
+    status = DB::kOK;
+  }
+  else if (op == INSERT)
+    status = TransactionInsert(db);
+  else if (op == SCAN)
+    throw utils::Exception("Operation request is not recognized!");
+  else if (op == READMODIFYWRITE)
+    throw utils::Exception("Operation request is not recognized!");
+  else
+    throw utils::Exception("Operation request is not recognized!");
   return (status == DB::kOK);
 }
 

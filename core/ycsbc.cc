@@ -221,6 +221,13 @@ int main(const int argc, const char *argv[]) {
     std::cout << "Run runtime(sec): " << runtime << std::endl;
     std::cout << "Run operations(ops): " << sum << std::endl;
     std::cout << "Run throughput(ops/sec): " << sum / runtime << std::endl;
+
+    std::ofstream MyFile("out.txt");
+    for (int i = 0; i < wl.traces.size(); i++)
+    {
+      ycsbc::Trace t = wl.traces[i];
+      MyFile << t.type << ',' << t.key << ',' << 0 << std::endl;
+    }
   }
 
   for (int i = 0; i < num_threads; i++) {

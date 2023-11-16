@@ -40,6 +40,11 @@ enum Operation {
 
 extern const char *kOperationString[MAXOPTYPE];
 
+struct Trace{
+  std::string type;
+  uint64_t key;
+};
+
 class CoreWorkload {
  public:
   ///
@@ -226,6 +231,9 @@ class CoreWorkload {
   bool ordered_inserts_;
   size_t record_count_;
   int zero_padding_;
+  
+ public:
+  std::vector<Trace> traces;
 };
 
 } // ycsbc
